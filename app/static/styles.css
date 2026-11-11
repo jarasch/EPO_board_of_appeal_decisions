@@ -1,0 +1,359 @@
+/* Restyled on the Neo4j Needle design system (style_template/). Tokens are
+   loaded from vendor/needle/styles.css (linked before this file in index.html);
+   everything below consumes those custom properties rather than hardcoded
+   colours, so switching data-theme="dark" on <html> re-skins the whole page.
+
+   Two deliberate departures from borrowing Needle's success/warning/danger
+   palette, both noted where they apply:
+   - authorityTier badges use the primary-colour family as an intensity
+     gradient (binding = strongest), not semantic colour, because tier is a
+     rank, not a good/bad judgement.
+   - outcomeType badges stay neutral. "Revoked" is not objectively bad -- it is
+     bad for the proprietor and good for the opponent -- so colour-coding it
+     red/green would smuggle in a point of view the underlying data doesn't
+     support (see the appellant-role discussion this app deliberately keeps
+     out of scope). */
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--canvas);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body-m);
+  line-height: var(--lh-body-m);
+  -webkit-font-smoothing: antialiased;
+}
+
+header {
+  padding: var(--space-8) var(--space-8) var(--space-2);
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+header img.logo { height: 28px; }
+header h1 {
+  font-family: var(--font-display);
+  font-weight: var(--fw-display);
+  font-size: var(--fs-title-2);
+  margin: 0;
+  color: var(--text);
+}
+.subtitle { color: var(--text-weak); margin: var(--space-2) 0 0; font-size: var(--fs-body-s); }
+
+.ask-bar { padding: var(--space-5) var(--space-8); }
+#ask-form { display: flex; gap: var(--space-4); }
+#question {
+  flex: 1;
+  padding: var(--space-5) var(--space-6);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-input);
+  font: inherit;
+  background: var(--surface);
+  color: var(--text);
+}
+#question:focus-visible { outline: 2px solid var(--primary-focus); outline-offset: 2px; }
+#ask-button {
+  padding: var(--space-5) var(--space-8);
+  border: none;
+  border-radius: var(--radius-control);
+  background: var(--primary-fill);
+  color: var(--text-inverse);
+  font-weight: var(--fw-semibold);
+  cursor: pointer;
+  transition: background-color 140ms ease-out;
+}
+#ask-button:hover:not(:disabled) { background: var(--primary-hover); }
+#ask-button:active:not(:disabled) { background: var(--primary-pressed); }
+#ask-button:disabled { background: var(--disabled-fill); color: var(--disabled-text); cursor: default; }
+
+.chips {
+  margin-top: var(--space-5);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+/* Weight carries the emphasis, not capitals -- Needle: "never ALL CAPS as a
+   styling device; a label that needs emphasis gets weight 700, not capitals." */
+.chip-group-label {
+  font-size: var(--fs-body-s);
+  font-weight: var(--fw-bold);
+  color: var(--text-weakest);
+  align-self: center;
+  margin-right: var(--space-1);
+}
+.chip {
+  border: 1px solid var(--border-weak);
+  background: var(--surface);
+  border-radius: var(--radius-pill);
+  padding: var(--space-3) var(--space-6);
+  font-size: var(--fs-body-s);
+  cursor: pointer;
+  color: var(--text);
+  transition: border-color 140ms ease-out, color 140ms ease-out;
+}
+.chip:hover { border-color: var(--primary-border); color: var(--primary-text); }
+.chips-loading { color: var(--text-weak); font-size: var(--fs-body-s); }
+
+.capability-strip { padding: 0 var(--space-8) var(--space-6); }
+.capability-strip table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface);
+  border: 1px solid var(--border-weak);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  font-size: var(--fs-body-s);
+  box-shadow: var(--elevation-raised);
+}
+.capability-strip th, .capability-strip td {
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--border-weak);
+  text-align: left;
+}
+.capability-strip th { background: var(--primary-bg); color: var(--primary-text); font-weight: var(--fw-semibold); }
+.capability-strip tr:last-child td { border-bottom: none; }
+.capability-strip td:first-child { color: var(--text-weak); font-weight: var(--fw-semibold); width: 22%; }
+
+.deep-bar { padding: 0 var(--space-8) var(--space-6); }
+#deep-button {
+  padding: var(--space-4) var(--space-6);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  color: var(--text-strong);
+  font-weight: var(--fw-semibold);
+  cursor: pointer;
+  transition: background-color 140ms ease-out;
+}
+#deep-button:hover:not(:disabled) { background: var(--primary-bg); }
+#deep-button:disabled { background: var(--disabled-fill); color: var(--disabled-text); cursor: default; }
+.deep-note { color: var(--text-weak); font-size: var(--fs-body-s); margin: var(--space-3) 0 0; }
+
+.column.deep { margin: 0 var(--space-8) var(--space-8); }
+.topic-card {
+  border: 1px solid var(--border-weak);
+  border-radius: var(--radius-s);
+  padding: var(--space-4) var(--space-5);
+  margin-bottom: var(--space-3);
+}
+.topic-label { font-weight: var(--fw-bold); margin-bottom: var(--space-2); }
+.topic-summary { font-size: var(--fs-body-s); color: var(--text-weak); }
+
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+  padding: 0 var(--space-8) var(--space-8);
+  align-items: start;
+}
+@media (max-width: 900px) { .columns { grid-template-columns: 1fr; } }
+
+.column {
+  background: var(--surface);
+  border: 1px solid var(--border-weak);
+  border-radius: var(--radius-card-lg);
+  box-shadow: var(--elevation-raised);
+  padding: var(--space-6) var(--space-7);
+  min-height: 160px;
+}
+.column h2 {
+  margin: 0 0 var(--space-5);
+  font-family: var(--font-sans);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-title-4);
+  letter-spacing: var(--tracking-title);
+}
+.column.graphrag h2 { color: var(--primary-text); }
+.empty-state { color: var(--text-weak); font-size: var(--fs-body-m); }
+
+/* Rendered markdown -- block elements need their own rhythm now that the
+   answer is real HTML (headings, paragraphs, lists), not pre-wrapped text. */
+.answer-text { font-size: var(--fs-body-m); }
+.answer-text > *:first-child { margin-top: 0; }
+.answer-text > *:last-child { margin-bottom: 0; }
+.answer-text p { margin: 0 0 var(--space-5); }
+.answer-text ul, .answer-text ol { margin: 0 0 var(--space-5); padding-left: var(--space-7); }
+.answer-text li { margin-bottom: var(--space-2); }
+.answer-text h1, .answer-text h2, .answer-text h3, .answer-text h4 {
+  font-family: var(--font-sans);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--tracking-title);
+  margin: var(--space-6) 0 var(--space-3);
+}
+.answer-text h1 { font-size: var(--fs-title-3); }
+.answer-text h2 { font-size: var(--fs-title-4); }
+.answer-text h3, .answer-text h4 { font-size: var(--fs-subheading-m); }
+.answer-text code { font-family: var(--font-code); font-size: 0.92em; background: var(--canvas); padding: 1px 5px; border-radius: var(--radius-xs); }
+.answer-text pre { background: var(--canvas); padding: var(--space-5); border-radius: var(--radius-s); overflow-x: auto; }
+.answer-text pre code { background: none; padding: 0; }
+.answer-text blockquote { border-left: 3px solid var(--border-strong); margin: 0 0 var(--space-5); padding-left: var(--space-5); color: var(--text-weak); }
+.answer-text strong { font-weight: var(--fw-bold); }
+.answer-text a { color: var(--primary-text); }
+
+.answer-text .cite {
+  display: inline-block;
+  color: var(--primary-text);
+  font-weight: var(--fw-bold);
+  cursor: pointer;
+  padding: 0 1px;
+  border-radius: var(--radius-xs);
+  transition: background-color 140ms ease-out;
+}
+.answer-text .cite:hover, .answer-text .cite.focused { background: var(--primary-bg); }
+.answer-text .unverified {
+  background: var(--danger-bg);
+  color: var(--danger-text);
+  border-radius: var(--radius-xs);
+  padding: 0 2px;
+}
+
+.refused-banner {
+  background: var(--danger-bg);
+  color: var(--danger-text);
+  border: 1px solid var(--danger-border-weak);
+  border-radius: var(--radius-s);
+  padding: var(--space-4) var(--space-5);
+  font-weight: var(--fw-bold);
+}
+.raw-answer {
+  margin-top: var(--space-4);
+  font-size: var(--fs-body-s);
+}
+.raw-answer summary {
+  cursor: pointer;
+  color: var(--secondary-text, inherit);
+}
+
+.validation-line {
+  margin-top: var(--space-5);
+  font-size: var(--fs-body-s);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-s);
+  border: 1px solid transparent;
+}
+.validation-line.ok { background: var(--success-bg); color: var(--success-text); border-color: var(--success-border-weak); }
+.validation-line.bad { background: var(--danger-bg); color: var(--danger-text); border-color: var(--danger-border-weak); }
+.validation-line.warn { background: var(--warning-bg); color: var(--warning-text); border-color: var(--warning-border-weak); }
+
+.graph-panel {
+  margin-top: var(--space-5);
+  border: 1px solid var(--border-weak);
+  border-radius: var(--radius-l);
+  height: 320px;
+  background: var(--canvas);
+}
+
+.section-label {
+  margin-top: var(--space-6);
+  font-size: var(--fs-body-s);
+  font-weight: var(--fw-bold);
+  color: var(--text-weakest);
+}
+
+.chunk-list, .source-list { margin: var(--space-4) 0 0; padding: 0; list-style: none; }
+.chunk-item, .source-item {
+  border: 1px solid var(--border-weak);
+  border-radius: var(--radius-m);
+  padding: var(--space-4) var(--space-5);
+  margin-bottom: var(--space-3);
+  font-size: var(--fs-body-s);
+  background: var(--surface);
+}
+.chunk-item .score, .source-item .score { color: var(--text-weakest); font-size: var(--fs-body-s); }
+.source-item { cursor: pointer; transition: border-color 140ms ease-out, box-shadow 140ms ease-out; }
+.source-item:hover { border-color: var(--border-strong); }
+.source-item.focused { border-color: var(--primary-border); box-shadow: 0 0 0 2px var(--primary-bg); }
+.source-item .snippet { color: var(--text-weak); margin-top: var(--space-2); }
+.source-item .not-cited { color: var(--text-weakest); font-style: italic; margin-top: var(--space-2); }
+
+.badge {
+  display: inline-block;
+  font-size: var(--fs-body-s);
+  font-weight: var(--fw-semibold);
+  padding: 1px var(--space-4);
+  border-radius: var(--radius-pill);
+  margin-right: var(--space-2);
+}
+/* Authority tier: one hue, four intensities -- a rank, not a verdict. */
+.badge.tier-binding { background: var(--primary-fill); color: var(--text-inverse); }
+.badge.tier-landmark { background: var(--primary-border-weak); color: var(--primary-pressed); }
+.badge.tier-distributed { background: var(--primary-bg); color: var(--primary-text); }
+.badge.tier-routine { background: var(--border-weak); color: var(--text-weak); }
+/* Outcome: deliberately neutral -- see the note at the top of this file. */
+.badge.outcome { background: var(--surface-raised); color: var(--text-weak); border: 1px solid var(--border-weak); }
+
+.explain-toggle {
+  margin-top: var(--space-5);
+  font-size: var(--fs-body-s);
+  color: var(--primary-text);
+  cursor: pointer;
+  user-select: none;
+}
+.explain-panel {
+  margin-top: var(--space-3);
+  font-size: var(--fs-body-s);
+  color: var(--text-weak);
+  background: var(--primary-bg);
+  border-radius: var(--radius-s);
+  padding: var(--space-4) var(--space-5);
+  display: none;
+}
+.explain-panel.open { display: block; }
+.explain-panel div { margin-bottom: var(--space-1); }
+
+footer#caveats {
+  padding: var(--space-5) var(--space-8) var(--space-8);
+  color: var(--text-weakest);
+  font-size: var(--fs-body-s);
+  max-width: 900px;
+}
+footer#caveats p { margin: var(--space-2) 0; }
+
+.detail-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 27, 29, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+.detail-overlay.hidden { display: none; }
+.detail-card {
+  background: var(--surface);
+  border-radius: var(--radius-card-lg);
+  padding: var(--space-8) var(--space-8);
+  max-width: 560px;
+  max-height: 80vh;
+  overflow: auto;
+  box-shadow: var(--elevation-overlay);
+}
+.detail-card h3 { margin-top: 0; font-family: var(--font-sans); font-weight: var(--fw-bold); }
+.detail-card .close-btn {
+  float: right;
+  cursor: pointer;
+  color: var(--text-weakest);
+  font-size: 1.1rem;
+}
+.detail-card .text-block {
+  margin-top: var(--space-5);
+  font-size: var(--fs-body-s);
+  background: var(--canvas);
+  border-radius: var(--radius-s);
+  padding: var(--space-5);
+  white-space: pre-wrap;
+}
+
+.spinner {
+  display: inline-block;
+  width: 14px; height: 14px;
+  border: 2px solid var(--border-weak);
+  border-top-color: var(--primary-fill);
+  border-radius: var(--radius-full);
+  animation: spin 0.8s linear infinite;
+  margin-right: var(--space-3);
+  vertical-align: middle;
+}
+@keyframes spin { to { transform: rotate(360deg); } }

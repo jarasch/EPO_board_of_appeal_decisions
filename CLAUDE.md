@@ -1,5 +1,42 @@
 # Claude Code Agent Context — neo4j-mcp-workspace-template
 
+## 0. Repository-Specific Context: EPO Board of Appeal Decisions
+
+This workspace instance is being used to build a Neo4j graph from a specific data source: a corpus of decisions from the EPO (European Patent Office) Boards of Appeal. The generic template mechanics in the rest of this file (sections 1–8) still apply — this section only describes the source data itself.
+
+**Contents:**
+- `data/EPDecisions_March2026.xml` — the corpus. **~1.2 GB, 51,299 `<ep-appeal-decision>` records.** Root element `<ep-appeal-decisions date-produced="YYYYMMDD">`. Decision text is in German, English, and French (mixed within the file, per-decision `lang`/`procedure-lang` attributes).
+- `data/ep-appeal-decision.v1.1.dtd` and `data/ep-appeal-decision.v1.1.xsd` — the two equivalent schema definitions for the corpus (DTD and XSD forms of the same v1.1 grammar).
+- `data/xml.xsd`, `data/xlink.xsd` — standard W3C schemas imported by the XSD above (xml: namespace attributes, XLink).
+- `importer/` (`parser.py`, `loader.py`, `schema.py`), `import_decisions.py`, `enrich_graph.py`, `requirements.txt` — custom Python tooling for parsing this XML corpus and loading/enriching it in Neo4j, layered on top of the workspace template's own MCP-based ingestion path. Prefer the template's `neo4j-ingest` / `neo4j-lexical-graph` / `neo4j-entity-graph` MCP servers (section 4/5 below) for new ingestion work where they fit; treat this custom tooling as existing project-specific code to maintain, not a pattern to duplicate.
+
+**Handling the XML file:** it is too large to load into an editor or into memory with a DOM parser, and too large for the `Read` tool. Treat it as a stream:
+- Quick inspection: `head -c N`, `grep`, `xmllint --stream`, or line-oriented tools. The file is written with minimal whitespace, so line counts don't map cleanly to record counts — count records with `grep -c '<ep-appeal-decision '` instead.
+- Programmatic parsing: use a streaming/incremental parser (e.g. Python `lxml.etree.iterparse`, or SAX-style parsing) and clear elements as you go. Never `read()` the whole file or build a full DOM.
+- Validation against the schema: `xmllint --noout --schema data/ep-appeal-decision.v1.1.xsd data/EPDecisions_March2026.xml` (slow on the full file — consider validating a sample/extract first).
+
+**Record structure:** each `<ep-appeal-decision>` (attributes: `accession-num`, `dtd-version`, `lang`, `procedure-lang`, `appeal-type`) follows this element order (all but the first are optional):
+
+```
+ep-appeal-bib-data        -- required: case number, board code, decision date, ECLI, IPC
+                              classifications, application/publication refs, parties'
+                              addresses, appeal board members, registrar
+ep-headword
+ep-legal-refs              -- legal provisions/case-law cited, as refs or full citations
+ep-keywords / ep-keywords-documentation
+ep-cited-decisions
+ep-headnote
+ep-catchword
+ep-summary-of-facts        -- (heading*, p+)+
+ep-reasons-for-decision    -- (heading*, p+)+
+ep-appeal-order            -- (heading*, p+)+
+abstract*
+```
+
+Text-bearing elements (`p`, `heading`, `ep-headword`, etc.) allow inline markup: `b`, `i`, `u`, `sup`, `sub`, `smallcaps`. The DTD (`data/ep-appeal-decision.v1.1.dtd`) is the fastest place to check an element's exact allowed children/attributes; the XSD is the canonical/more detailed version of the same grammar.
+
+---
+
 ## 1. Setup Status Check
 
 **On every session start, verify the following before doing any work:**
@@ -177,6 +214,7 @@ One skill covers all use cases:
 - **Never read or print passwords** from `.env` or `mcp.json`.
 - **Never modify `.cursor/mcp.json` or `.mcp.json`.** These are generated files. Direct the user to re-run `./setup.sh` if credentials need updating.
 - **Never write credentials to any file** other than what `setup.sh` manages.
+- This repo's `.env` holds a live-looking API key in plaintext. Never read its contents into responses, logs, or committed files. Don't add it to `.gitignore` assuming that's sufficient — flag any accidental exposure immediately rather than silently working around it.
 
 ---
 

@@ -1,0 +1,6 @@
+body{margin:0;background:var(--canvas);color:var(--text);font-family:var(--font-sans);font-size:var(--fs-body-m);line-height:var(--lh-body-m);-webkit-font-smoothing:antialiased;text-wrap:pretty}
+a{color:var(--primary-text);text-decoration:none}
+a:hover{color:var(--primary-hover);text-decoration:underline}
+a:active{color:var(--primary-pressed)}
+*:focus-visible{outline:2px solid var(--primary-focus);outline-offset:2px;border-radius:var(--radius-xs)}
+code,pre{font-family:var(--font-code)}

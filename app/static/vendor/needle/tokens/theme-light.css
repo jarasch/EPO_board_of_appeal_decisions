@@ -1,0 +1,42 @@
+:root,[data-theme="light"],.ndl-theme-light{
+  --canvas:#F5F6F6;
+  --surface:#FFFFFF;
+  --surface-raised:#F5F6F6;
+
+  --border-weak:#E2E3E5;
+  --border-strong:#BBBEC3;
+
+  --text:#1A1B1D;
+  --text-weak:#4D5157;
+  --text-weaker:#5E636A;
+  --text-weakest:#A8ACB2;
+  --text-inverse:#FFFFFF;
+
+  --primary-text:#0A6190;
+  --primary-icon:#0A6190;
+  --primary-fill:#0A6190;
+  --primary-border:#0A6190;
+  --primary-bg:#E7FAFB;
+  --primary-border-weak:#8FE3E8;
+  --primary-focus:#30839D;
+  --primary-hover:#02507B;
+  --primary-pressed:#014063;
+
+  --success-text:#3F7824;--success-bg:#E7FCD7;--success-border-weak:#90CB62;
+  --warning-text:#765500;--warning-bg:#FFFAD1;--warning-border-weak:#FFD600;
+  --danger-text:#BB2D00;--danger-bg:#FFE9E7;--danger-border-weak:#FFAA97;
+  --danger-hover:#961200;--danger-pressed:#730E00;
+  --discovery-text:#5A34AA;--discovery-bg:#E9DEFF;--discovery-border-weak:#B38EFF;
+
+  /* DERIVED — not in source spec. The Needle spec defines no disabled token. */
+  --disabled-fill:#E2E3E5;
+  --disabled-text:#A8ACB2;
+  --disabled-border:#E2E3E5;
+
+  --neutral-hover:rgba(111,117,126,0.10);
+  --neutral-pressed:rgba(111,117,126,0.20);
+
+  /* Elevation is defined by the source spec for the LIGHT theme only. */
+  --shadow-raised:0 1px 2px rgba(26,27,29,0.18);
+  --shadow-overlay:0 4px 8px rgba(26,27,29,0.12);
+}

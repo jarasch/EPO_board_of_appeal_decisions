@@ -1,0 +1,46 @@
+[data-theme="dark"],.ndl-theme-dark{
+  --canvas:#1A1B1D;
+  --surface:#212325;
+  --surface-raised:#212325;
+
+  --border-weak:#3C3F44;
+  --border-strong:#5E636A;
+
+  --text:#F5F6F6;
+  --text-weak:#CFD1D4;
+  --text-weaker:#A8ACB2;
+  --text-weakest:#818790;
+  --text-inverse:#1A1B1D;
+
+  --primary-text:#8FE3E8;
+  --primary-icon:#8FE3E8;
+  --primary-fill:#8FE3E8;
+  --primary-border:#8FE3E8;
+  --primary-bg:#262F31;
+  --primary-border-weak:#02507B;
+  --primary-focus:#5DB3BF;
+  --primary-hover:#5DB3BF;
+  --primary-pressed:#4C99A4;
+
+  --success-text:#90CB62;--success-bg:#262D24;--success-border-weak:#296127;
+  --warning-text:#FFD600;--warning-bg:#312E1A;--warning-border-weak:#765500;
+  --danger-text:#FFAA97;--danger-bg:#432520;--danger-border-weak:#730E00;
+  --danger-hover:#F96746;--danger-pressed:#E84E2C;
+  --discovery-text:#CCB4FF;--discovery-bg:#2C2A34;--discovery-border-weak:#4B2894;
+
+  /* DERIVED — not in source spec. */
+  --disabled-fill:#3C3F44;
+  --disabled-text:#818790;
+  --disabled-border:#3C3F44;
+
+  --neutral-hover:rgba(111,117,126,0.10);
+  --neutral-pressed:rgba(111,117,126,0.20);
+
+  /* The source spec defines elevation for the light theme only, so no dark shadow is
+     invented here. On dark surfaces, elevation is conveyed by border-weak #3C3F44 and
+     the surface step from canvas #1A1B1D to surface #212325. */
+  --shadow-raised:none;
+  --shadow-overlay:none;
+  --elevation-raised:none;
+  --elevation-overlay:none;
+}

@@ -1,0 +1,40 @@
+/* Raw palette. Prefer the semantic aliases in theme-light.css / theme-dark.css. */
+:root{
+  --palette-neutral-00:#FFFFFF;
+  --palette-neutral-10:#F5F6F6;
+  --palette-neutral-20:#E2E3E5;
+  --palette-neutral-30:#BBBEC3;
+  --palette-neutral-40:#A8ACB2;
+  --palette-neutral-50:#818790;
+  --palette-neutral-55:#6F757E;
+  --palette-neutral-60:#5E636A;
+  --palette-neutral-65:#CFD1D4;
+  --palette-neutral-70:#4D5157;
+  --palette-neutral-80:#3C3F44;
+  --palette-neutral-90:#212325;
+  --palette-neutral-100:#1A1B1D;
+
+  --palette-primary-tint:#E7FAFB;
+  --palette-primary-light:#8FE3E8;
+  --palette-primary-mid:#5DB3BF;
+  --palette-primary-pressed-dark:#4C99A4;
+  --palette-primary-focus:#30839D;
+  --palette-primary:#0A6190;
+  --palette-primary-hover:#02507B;
+  --palette-primary-pressed:#014063;
+  --palette-primary-tint-dark:#262F31;
+
+  --palette-success:#3F7824;--palette-success-bg:#E7FCD7;--palette-success-border:#90CB62;
+  --palette-success-dark:#90CB62;--palette-success-bg-dark:#262D24;--palette-success-border-dark:#296127;
+
+  --palette-warning:#765500;--palette-warning-bg:#FFFAD1;--palette-warning-border:#FFD600;
+  --palette-warning-dark:#FFD600;--palette-warning-bg-dark:#312E1A;
+
+  --palette-danger:#BB2D00;--palette-danger-bg:#FFE9E7;--palette-danger-border:#FFAA97;
+  --palette-danger-hover:#961200;--palette-danger-pressed:#730E00;
+  --palette-danger-dark:#FFAA97;--palette-danger-bg-dark:#432520;
+  --palette-danger-hover-dark:#F96746;--palette-danger-pressed-dark:#E84E2C;
+
+  --palette-discovery:#5A34AA;--palette-discovery-bg:#E9DEFF;--palette-discovery-border:#B38EFF;
+  --palette-discovery-dark:#CCB4FF;--palette-discovery-bg-dark:#2C2A34;--palette-discovery-border-dark:#4B2894;
+}

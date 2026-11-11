@@ -1,0 +1,31 @@
+/* Marketing and hero surfaces ONLY. Never for interface controls. */
+:root{
+  --brand-baltic:#4C99A4;
+  --brand-baltic-dark:#014063;
+  --brand-baltic-darkest:#002B43;
+  --brand-baltic-light:#8FE3E8;
+  --brand-cream:#F2EAD4;
+  --brand-off-white:#FCF9F6;
+  --brand-black:#181414;
+  --brand-dark-gray:#4F4E4D;
+
+  --brand-forest:#145439;
+  --brand-forest-mid:#6FA646;
+  --brand-forest-light:#90CB62;
+
+  --brand-marigold:#FFA901;
+  --brand-marigold-mid:#FFC450;
+  --brand-marigold-light:#FFCF72;
+
+  --brand-hibiscus:#D43300;
+  --brand-hibiscus-mid:#F96746;
+  --brand-hibiscus-light:#FF8E6A;
+
+  /* Punctuation only — never a base or large fill. */
+  --brand-periwinkle:#6A82FF;
+  --brand-highlight-yellow:#FAFF00;
+
+  /* Backgrounds only. Tonal, single hue, 45deg, lightest at top right. */
+  --gradient-baltic:linear-gradient(45deg,#002B43 0%,#014063 45%,#4C99A4 100%);/* @kind other */
+  --gradient-forest:linear-gradient(45deg,#145439 0%,#6FA646 70%,#90CB62 100%);/* @kind other */
+}

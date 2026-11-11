@@ -1,0 +1,11 @@
+:root{
+  /* Categorical chart series — use in order, 12 max per chart. */
+  --chart-1:#55BDC5;--chart-2:#4D49CB;--chart-3:#DC8B39;--chart-4:#C9458D;
+  --chart-5:#8E8CF3;--chart-6:#78DE7C;--chart-7:#3F80E3;--chart-8:#673FAB;
+  --chart-9:#DBBF40;--chart-10:#BF732D;--chart-11:#478A6E;--chart-12:#ADE86B;
+
+  /* Graph node fills — use in order. */
+  --node-1:#FFDF81;--node-2:#C990C0;--node-3:#F79767;--node-4:#56C7E4;
+  --node-5:#F16767;--node-6:#D8C7AE;--node-7:#8DCC93;--node-8:#ECB4C9;
+  --node-9:#4D8DDA;--node-10:#FFC354;--node-11:#DA7294;--node-12:#579380;
+}

@@ -241,3 +241,9 @@ outputs/reports/*
 outputs/schemas/*
 !outputs/**/.gitkeep
 
+
+# EPO Board of Appeal corpus and derived data (not committed)
+data/*.xml
+data/bds/
+.playwright-mcp/
+CLAUDE.mdbkp

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EPO Board of Appeal decisions -- RAG vs GraphRAG</title>
+<!-- Neo4j Needle design system: tokens only (colour, type, spacing, shape,
+     elevation) -- no React, this page has no build step. See style_template/. -->
+<link rel="stylesheet" href="vendor/needle/styles.css">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" href="vendor/needle/assets/logo-mark.svg">
+<script src="https://unpkg.com/vis-network@9/standalone/umd/vis-network.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
+</head>
+<body>
+<header>
+  <img class="logo" src="vendor/needle/assets/logo-lockup-horizontal.svg" alt="Neo4j">
+  <div>
+    <h1>EPO Board of Appeal decisions</h1>
+    <p class="subtitle">Same question, two pipelines: vector-only RAG vs graph-grounded GraphRAG</p>
+  </div>
+</header>
+
+<section class="ask-bar">
+  <form id="ask-form">
+    <input id="question" type="text" placeholder="Ask a patent-law question about EPO Board of Appeal decisions&hellip;" autocomplete="off">
+    <button type="submit" id="ask-button">Ask</button>
+  </form>
+  <div class="chips" id="chips">
+    <span class="chips-loading">Loading example questions&hellip;</span>
+  </div>
+</section>
+
+<section class="capability-strip" id="capability-strip">
+  <table>
+    <thead>
+      <tr><th></th><th>Vector-only RAG</th><th>GraphRAG</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Sources shown</td><td>flat chunk list</td><td>typed graph nodes with relationships</td></tr>
+      <tr><td>Citation &rarr; source traceability</td><td>none &mdash; free-text case numbers, unverifiable</td><td>every [n] resolves to a real node, clickable</td></tr>
+      <tr><td>Structured metadata</td><td>not available</td><td>board, date, outcome, authority tier per source</td></tr>
+      <tr><td>Retrieval channels</td><td>vector similarity only</td><td>vector + lexical + entity + structured filters</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="columns">
+  <article class="column baseline" id="baseline-column">
+    <h2>Vector-only RAG</h2>
+    <div class="empty-state">Ask a question to see both answers.</div>
+  </article>
+
+  <article class="column graphrag" id="graphrag-column">
+    <h2>GraphRAG</h2>
+    <div class="empty-state">Ask a question to see both answers.</div>
+  </article>
+</section>
+
+<section class="deep-bar">
+  <button type="button" id="deep-button" disabled>Run deep multi-agent analysis (~1-2 min, higher cost)</button>
+  <p class="deep-note">Iterative retrieval assessment + Leiden topic clustering + per-topic
+    summarizer agents + a faithfulness critic that can refuse the answer. Ask a question above
+    first, then run this on it explicitly -- it is not part of the automatic comparison.</p>
+</section>
+
+<section class="column deep" id="deep-column"></section>
+
+<footer id="caveats">
+  <p>Corpus: EPO Board of Appeal decisions. Appeals-only; base rates are conditional on the case
+  having been appealed. Retrieval is deduplicated to one canonical record per (case, language).</p>
+</footer>
+
+<div id="detail-overlay" class="detail-overlay hidden">
+  <div class="detail-card" id="detail-card"></div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
